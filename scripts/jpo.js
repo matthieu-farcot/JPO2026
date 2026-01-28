@@ -5,7 +5,7 @@ AFRAME.registerComponent("hdr-env", {
   init: function () {
     const scene = this.el.sceneEl.object3D;
     const loader = new THREE.TextureLoader();
-    loader.setPath("../objets/");
+    loader.setPath("./objets/");
 
     loader.load("cadre.png", (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
