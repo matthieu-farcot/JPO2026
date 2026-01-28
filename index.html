@@ -1,13 +1,13 @@
 <doctype html>
 <html>
 <head>
-<script src="https://aframe.io/releases/1.7.0/aframe.min.js">
-  </script>
+<script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+<script type="module" src="../scripts/jpo.js"></script>  
 </head>
 <body>
-<a-scene>
-<a-gltf-model src="./objets/cormont.glb">
-</a-gltf-model>
+<a-scene hdr-env id="scene">
+<a-entity glt-model="./objets/cormont.glb">
+</a-entity>
 </a-scene>
   </body>
 </html>
