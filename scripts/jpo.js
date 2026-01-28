@@ -7,7 +7,7 @@ AFRAME.registerComponent("hdr-env", {
     const loader = new THREE.TextureLoader();
     loader.setPath("../objets/");
 
-    loader.load("golden_gate_hills_4k.jpg", (texture) => {
+    loader.load("cadre.png", (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.background = texture;
       scene.environment = texture;
