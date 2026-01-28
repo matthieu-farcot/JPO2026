@@ -22,11 +22,19 @@
 
       <a-entity id="point_dep" gltf-model="./objets/fleche.glb" scale="5 10 5" position="-4.34578 0 2.03725">
       </a-entity>
-   <a-entity id="./objets/fleche.glb" 
-          rotation="0 0 0" 
-          animation="dur: 5000; loop: true; property: position; from:-4.34578 0 2.03725 ; to: 0 0.5 0; dir: alternate">
-</a-entity>
-    
+  <a-scene>
+  <a-entity 
+    id="fleche" 
+    gltf-model="./objets/fleche.glb" 
+    position="-4.34578 0 2.03725"
+    animation="dur: 2000; 
+               property: position; 
+               from: -4.34578 0 2.03725; 
+               to: -4.34578 2 2.03725; 
+               dir: alternate; 
+               loop: true;">
+  </a-entity>
+</a-scene>    
       <a-entity id="base_dep" gltf-model="./objets/base.glb" scale="5 10 5" position="-4.34578 0 2.03725">
       </a-entity>
 
