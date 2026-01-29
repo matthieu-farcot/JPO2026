@@ -4,6 +4,7 @@
 <head>
   
   <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+   <script src="./js/mindar-image-aframe.prod.js"></script>
   <script src="./scripts/jpo.js"></script>
   <script>
     if (window.AFRAME && AFRAME.THREE) {
@@ -15,8 +16,8 @@
 
   <body>
 
-    <a-scene hdr-env id="scene"  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;"
-           embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;"
+           embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" hdr-env id="scene" >
     <a-camera mindar-image-camera></a-camera>>
 
       <a-entity mindar-image-target="targetIndex: 0">
