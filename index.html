@@ -2,7 +2,7 @@
 <html>
   
 <head>
-  
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
    <script src="./js/mindar-image-aframe.prod.js"></script>
   <script src="./scripts/jpo.js"></script>
@@ -16,13 +16,12 @@
 
   <body>
 
-    <a-scene  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;"
-           embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" hdr-env id="scene" >
+<!--    <a-scene  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;" embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" hdr-env id="scene" >-->
+    <a-scene  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;" embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-camera mindar-image-camera></a-camera>>
 
       <a-entity mindar-image-target="targetIndex: 0">
-      <a-entity id="carte" gltf-model="./objets/corm.glb" position="0 0 0">
-      </a-entity>
+      <a-entity id="carte" gltf-model="./objets/corm.glb" position="0 0 0"></a-entity>
 
       
       <a-entity id="fleche" gltf-model="./objets/fleche.glb" scale="5 10 5" position="-4.34578 0 2.03725" animation__float="dur: 2000;  property: position; from: -4.34578 0 2.03725; to: -4.34578 .2 2.03725; dir: alternate; loop: true;">
