@@ -10,13 +10,16 @@
       window.THREE = AFRAME.THREE;
     }
   </script>  
-
+ <script src="./js/mindar-image-aframe.prod.js"></script>
 </head>
 
   <body>
 
-    <a-scene hdr-env id="scene">
+    <a-scene hdr-env id="scene"  mindar-image="imageTargetSrc: ./targets.mind; smooth: true; smoothCount: 10;"
+           embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-camera mindar-image-camera></a-camera>>
 
+      <a-entity mindar-image-target="targetIndex: 0">
       <a-entity id="carte" gltf-model="./objets/corm.glb" position="0 0 0">
       </a-entity>
 
@@ -26,7 +29,7 @@
  
       <a-entity id="base_dep" gltf-model="./objets/base.glb" scale="5 10 5" position="-4.34578 0 2.03725">
       </a-entity>
-
+</a-entity>
     </a-scene>
   
   </body>
