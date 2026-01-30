@@ -3,14 +3,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      html, body { margin: 0; height: 100%; }
+      /* Play button overlay */
+      #playButton {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        padding: 12px 20px;
+        font-size: 16px;
+        background: rgba(0,0,0,0.75);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <a-scene mindar-image="imageTargetSrc: ./objets/targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <!-- Use a <video> asset so we can control playback from JS and enable loop/playsinline -->
+        <video id="video" src="./Epic-BTS3.mp4" loop playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <img id="overlayImg" src="./test-transparance.jpg" />
+      </a-assets>
+
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
       <a-entity mindar-image-target="targetIndex: 0">
-   <a-video src="./Epic-BTS3.mp4" position="0 0 0.1"></a-video>
-<a-image src="./test-transparance.jpg" position="0 0 0" scale="1.58566 2.11271 1.81025"></a-image>
-        </a-entity>
- </a-scene>
+        <!-- reference the video asset by id -->
+        <a-video src="#video" position="0 0 0.1"></a-video>
+        <a-image src="#overlayImg" position="0 0 0" scale="1.58566 2.11271 1.81025"></a-image>
+      </a-entity>
+    </a-scene>
+
+    <!-- Play button: required to start video playback on user gesture in most browsers -->
+    <button id="playButton">Play Video</button>
+
+    <script>
+      const video = document.querySelector("#video");
+      const playButton = document.querySelector("#playButton");
+      const targetEntity = document.querySelector("[mindar-image-target]");
+
+      // When user clicks the play button, start playback and hide the button.
+      playButton.addEventListener("click", async () => {
+        try {
+          await video.play();
+          playButton.style.display = "none";
+        } catch (err) {
+          console.error("Video play failed:", err);
+        }
+      });
+
+      // If the target is found, attempt to play if user already granted playback
+      // (this will silently fail if browser hasn't allowed playback without gesture)
+      targetEntity.addEventListener("targetFound", () => {
+        if (video.paused) {
+          video.play().catch(()=>{ /* ignore if not permitted */ });
+        }
+      });
+
+      // Optionally, when the target is lost you could pause the video:
+      // targetEntity.addEventListener("targetLost", () => { video.pause(); });
+    </script>
   </body>
 </html>
