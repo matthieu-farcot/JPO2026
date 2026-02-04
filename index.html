@@ -10,13 +10,40 @@
     <a-scene>
 <a-video id="video" src="./Epic-BTS3.mp4" position="-0.08939 1.86922 -4.46008" width="1" height="0.6" scale="4.81604 7.0769 1"></a-video>
 
-<a-entity id="pas epic" position="-2.99582 0 0">
-      <a-gltf-model id="jambe droite" src="./piedd.glb" gltf-model="./piedgg.glb" rotation="0 0 -86.10982703021142" position="-0.47337 0.91506 -0.33099"></a-gltf-model>
-      <a-gltf-model id="jambe gauche" src="./piedg.glb" gltf-model="./jambel.glb" position="-0.21378 0.90915 -0.3102" rotation="0 0 88.01147395225063"></a-gltf-model>
-<a-gltf-model id="quoi ma gueule" src="./torp.glb" gltf-model="./torp.glb" position="-0.357 0.78162 -0.267" scale="1 0.63329 1"></a-gltf-model>
-         <a-gltf-model id="servante1" src="./scene.glb" gltf-model="./scene.glb" position="-1.6181 0 0" rotation="0 90 0"></a-gltf-model>
-      <a-gltf-model id="servante2" src="./scene.glb" gltf-model="./scene.glb" position="0.75776 0 0" rotation="0 90 0"></a-gltf-model>
-    </a-entity>
+<a-entity id="pas epic"
+          position="-2.99582 0 0"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 6000; easing: linear">
+
+  <a-gltf-model id="jambe droite"
+                src="./piedd.glb"
+                rotation="0 0 -86.10982703021142"
+                position="-0.47337 0.91506 -0.33099">
+  </a-gltf-model>
+
+  <a-gltf-model id="jambe gauche"
+                src="./piedg.glb"
+                position="-0.21378 0.90915 -0.3102"
+                rotation="0 0 88.01147395225063">
+  </a-gltf-model>
+
+  <a-gltf-model id="quoi ma gueule"
+                src="./torp.glb"
+                position="-0.357 0.78162 -0.267"
+                scale="1 0.63329 1">
+  </a-gltf-model>
+
+  <a-gltf-model id="servante1"
+                src="./scene.glb"
+                position="-1.6181 0 0"
+                rotation="0 90 0">
+  </a-gltf-model>
+
+  <a-gltf-model id="servante2"
+                src="./scene.glb"
+                position="0.75776 0 0"
+                rotation="0 90 0">
+  </a-gltf-model>
+</a-entity>
         
 <a-entity id="epic">
 <a-entity id="boris" position="0 0 0" animation="dur: 2500; dir: alternate; easing: easeInOutSine; loop: true; property: position; to: 0 -0.8 0">
