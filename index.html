@@ -46,8 +46,13 @@
   <!-- PANTIN -->
   <a-entity id="pantin" pantin>
     <a-entity id="pelvis"></a-entity>
-    <a-cylinder id="legL" radius="0.08" color="#2563eb"></a-cylinder>
-    <a-cylinder id="legR" radius="0.08" color="#2563eb"></a-cylinder>
+    <a-cylinder id="legL" radius="0.08" color="#2563eb"
+      <a-gltf-model id="jambe gauche" src="./piedg.glb" gltf-model="./jambel.glb" position="0.05506 1.71924 0.02514" rotation="0 0 41.088159268384835"></a-gltf-model>
+         </a-cylinder>
+    <a-cylinder id="legR" radius="0.08" color="#2563eb"
+       <a-gltf-model id="jambe droite" src="./piedd.glb" position="-1.36221 1.03042 0.01073" rotation="22.08 0 -86.10982703021142" gltf-model="./piedd.glb">
+  </a-gltf-model>
+    </a-cylinder>
   </a-entity>
 
   <!-- CAMÉRA -->
