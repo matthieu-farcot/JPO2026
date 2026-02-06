@@ -38,65 +38,39 @@
  <a-gltf-model id="servante2" src="./scene.glb" gltf-model="./scene.glb" position="1.02503 -0.03257 0" rotation="0 90 0" animation="dir: alternate; dur: 2500; easing: linear; loop: true; property: position; to: 1.181 0 0">&gt;</a-gltf-model>
 
 
-         <!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Personnage sur cubes</title>
 <style>
-  body {
-    background: #f0f0f0;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
+  body{margin:0;background:#eee;height:100vh;}
+  .scene{position:relative;width:100%;height:100%;}
+  .cube{
+    width:70px;height:70px;
+    background:tomato;
+    position:absolute;bottom:40px;
+    cursor:grab;
   }
-
-  .scene {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  #cubeLeft{left:30%;}
+  #cubeRight{left:60%;}
+  .person{
+    position:absolute;
+    width:20px;height:100px;
+    background:blue;
+    bottom:110px;
   }
-
-  .cube {
-    width: 60px;
-    height: 60px;
-    background: #555;
-    position: absolute;
-    bottom: 100px;
-    cursor: grab;
+  .leg{
+    position:absolute;width:8px;height:60px;background:yellow;
+    top:90px;
   }
-
-  #cubeLeft { left: 40%; }
-  #cubeRight { left: 55%; }
-
-  /* Personnage */
-  .person {
-    position: absolute;
-    width: 20px;
-    height: 120px;
-    background: #222;
-    transform-origin: top center;
-  }
-
-  .leg {
-    position: absolute;
-    width: 6px;
-    height: 80px;
-    background: #222;
-    top: 100px;
-    transform-origin: top;
-  }
-
-  .leg.left { left: -20px; }
-  .leg.right { right: -20px; }
+  .leg.left{left:-22px;}
+  .leg.right{right:-22px;}
 </style>
 </head>
-
 <body>
+
 <div class="scene">
   <div id="cubeLeft" class="cube"></div>
   <div id="cubeRight" class="cube"></div>
-
   <div id="person" class="person">
     <div class="leg left"></div>
     <div class="leg right"></div>
@@ -104,42 +78,31 @@
 </div>
 
 <script>
-const cubeLeft = document.getElementById("cubeLeft");
-const cubeRight = document.getElementById("cubeRight");
-const person = document.getElementById("person");
-const legs = document.querySelectorAll(".leg");
+const cubes = document.querySelectorAll(".cube");
+let drag = null;
 
-let activeCube = null;
+cubes.forEach(cube => {
+  cube.onmousedown = () => drag = cube;
+});
+document.onmouseup = () => drag = null;
 
-document.addEventListener("mousedown", e => {
-  if (e.target.classList.contains("cube")) {
-    activeCube = e.target;
+document.onmousemove = e => {
+  if(drag){
+    drag.style.left = e.clientX - 35 + "px";
+    update();
   }
-});
+};
 
-document.addEventListener("mouseup", () => activeCube = null);
-
-document.addEventListener("mousemove", e => {
-  if (!activeCube) return;
-  activeCube.style.left = e.clientX - 30 + "px";
-  updatePerson();
-});
-
-function updatePerson() {
-  const leftRect = cubeLeft.getBoundingClientRect();
-  const rightRect = cubeRight.getBoundingClientRect();
-
-  const centerX = (leftRect.left + rightRect.left) / 2;
-  person.style.left = centerX + "px";
-  person.style.bottom = "160px";
-
-  const spread = rightRect.left - leftRect.left;
-  legs[0].style.transform = `rotate(${-spread / 15}deg)`;
-  legs[1].style.transform = `rotate(${spread / 15}deg)`;
+function update(){
+  const l = document.getElementById("cubeLeft").offsetLeft;
+  const r = document.getElementById("cubeRight").offsetLeft;
+  const center = (l + r) / 2;
+  const p = document.getElementById("person");
+  p.style.left = center + "px";
 }
-
-updatePerson();
+update();
 </script>
+
 </body>
 </html>
 
