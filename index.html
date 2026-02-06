@@ -83,20 +83,19 @@
       <a-box id="footR" position="0 0.55 0" width="0.3" height="0.1" depth="0.4" visible="false"></a-box>
     </a-entity>
 
-    <!-- PANTIN -->
-    <a-entity id="pantin" pantin>
-      <a-entity id="pelvis"></a-entity>
+<a-entity id="pantin" pantin="">
+      <a-entity id="pelvis" material="color: #000000"></a-entity>
 
-      <a-cylinder id="legL" radius="0.08">
-        <a-gltf-model src="./piedgg.glb"></a-gltf-model>
+      <a-cylinder id="legL" radius="0.08" material="color: #012730">
+        <a-gltf-model src="./piedgg.glb" gltf-model="./piedgg.glb" position="-0.04537 0.39182 -0.10042" rotation="-5.4230455309132415 -87.52732461536509 7.965259267908705"></a-gltf-model>
       </a-cylinder>
 
-      <a-cylinder id="legR" radius="0.08">
-        <a-gltf-model src="./piedd.glb"></a-gltf-model>
+      <a-cylinder id="legR" radius="0.08" material="color: #000000">
+        <a-gltf-model src="./piedd.glb" gltf-model="./piedd.glb" rotation="-2.7713968550477928 78.73700612246799 -5.295848900394199" position="0.33485 -0.5045 0.32478"></a-gltf-model>
       </a-cylinder>
 
-      <a-cylinder id="trunk" radius="0.12" height="0.4">
-        <a-gltf-model src="./torp.glb" rotation="0 180 0"></a-gltf-model>
+      <a-cylinder id="trunk" radius="0.12" height="0.4" material="color: #000000" position="0 1.911895003862225 0">
+        <a-gltf-model src="./torp.glb" rotation="0 180 0" gltf-model="./torp.glb" position="0.0355 -0.51785 -0.06258"></a-gltf-model>
       </a-cylinder>
     </a-entity>
 
