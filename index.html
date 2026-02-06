@@ -1,4 +1,181 @@
-         
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Pantin – Grand écart & lumière</title>
+  <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+</head>
+
+<body>
+<a-scene background="color:#111">
+
+  <!-- LUMIÈRES -->
+  <a-entity id="ambientLight"
+            light="type: ambient; color: #ffffff; intensity: 0.6">
+  </a-entity>
+
+  <a-entity id="mainLight"
+            light="type: directional; color: #ffffff; intensity: 0.9"
+            position="1 3 2">
+  </a-entity>
+
+  <!-- SOL -->
+  <a-plane rotation="-90 0 0"
+           width="10"
+           height="10"
+           color="#666">
+  </a-plane>
+
+  <!-- CAISSES -->
+  <a-entity id="boxL">
+<a-gltf-model id="ServL" src="./scene.glb"></a-gltf-model>
+    <a-box position="0 0.25 0"
+           width="0.6" height="0.5" depth="0.6"
+           color="#7a4a1f">
+    </a-box>
+    <a-box id="footL"
+           position="0 0.55 0"
+           width="0.3" height="0.1" depth="0.4"
+           color="#111">
+    </a-box>
+  </a-entity>
+
+  <a-entity id="boxR">
+           <a-gltf-model id="ServR" src="./scene.glb"></a-gltf-model>
+    <a-box position="0 0.25 0"
+           width="0.6" height="0.5" depth="0.6"
+           color="#7a4a1f">
+    </a-box>
+    <a-box id="footR"
+           position="0 0.55 0"
+           width="0.3" height="0.1" depth="0.4"
+           color="#111">
+    </a-box>
+  </a-entity>
+
+  <!-- PANTIN -->
+  <a-entity id="pantin" pantin>
+    <a-entity id="pelvis"></a-entity>
+    <a-cylinder id="legL" radius="0.08" color="#2563eb"></a-cylinder>
+    <a-cylinder id="legR" radius="0.08" color="#2563eb"></a-cylinder>
+  </a-entity>
+
+  <!-- CAMÉRA -->
+  <a-entity position="0 2.5 4">
+    <a-camera></a-camera>
+  </a-entity>
+
+</a-scene>
+
+<script>
+/* =========================================================
+   PARAMÈTRES
+   ========================================================= */
+
+const boxWidth  = 0.6;
+const legLength = 1.2;
+
+const minSpread = boxWidth;
+const maxSpread = 2 * legLength;
+
+let spread = 1.2;
+let spreading = false;
+
+/* =========================================================
+   INTERACTION CLIC
+   ========================================================= */
+
+window.addEventListener("mousedown", () => spreading = true);
+window.addEventListener("mouseup",   () => spreading = false);
+
+/* =========================================================
+   CAISSES + LUMIÈRE
+   ========================================================= */
+
+AFRAME.registerComponent("box-spread", {
+  tick() {
+    const speed = 0.02;
+    spread += spreading ? speed : -speed;
+    spread = Math.min(Math.max(spread, minSpread), maxSpread);
+
+    // position des caisses
+    document.querySelector("#boxL").object3D.position.x = -spread / 2;
+    document.querySelector("#boxR").object3D.position.x =  spread / 2;
+
+    // ---- LUMIÈRE DYNAMIQUE ----
+    const t = (spread - minSpread) / (maxSpread - minSpread); // 0 → 1
+
+    // interpolation blanc → rouge
+    const r = 1.0;
+    const g = 1.0 - t;
+    const b = 1.0 - t;
+
+    const color = `rgb(${Math.floor(r*255)}, ${Math.floor(g*255)}, ${Math.floor(b*255)})`;
+
+    document.querySelector("#ambientLight")
+      .setAttribute("light", "color", color);
+
+    document.querySelector("#mainLight")
+      .setAttribute("light", "color", color);
+  }
+});
+
+document.querySelector("a-scene")
+  .setAttribute("box-spread", "");
+
+/* =========================================================
+   PANTIN GÉOMÉTRIQUE
+   ========================================================= */
+
+AFRAME.registerComponent("pantin", {
+  tick() {
+    const footL = document.querySelector("#footL")
+      .object3D.getWorldPosition(new THREE.Vector3());
+    const footR = document.querySelector("#footR")
+      .object3D.getWorldPosition(new THREE.Vector3());
+
+    const d = footL.distanceTo(footR);
+    const half = d / 2;
+
+    let pelvisY;
+    if (d >= 2 * legLength) {
+      pelvisY = footL.y;
+    } else {
+      pelvisY = footL.y + Math.sqrt(legLength * legLength - half * half);
+    }
+
+    const pelvisX = (footL.x + footR.x) / 2;
+
+    const pelvis = document.querySelector("#pelvis").object3D;
+    pelvis.position.set(pelvisX, pelvisY, 0);
+
+    connectLeg("#legL", footL, pelvis.position);
+    connectLeg("#legR", footR, pelvis.position);
+  }
+});
+
+/* =========================================================
+   JAMBE = CYLINDRE ENTRE DEUX POINTS
+   ========================================================= */
+
+function connectLeg(selector, foot, pelvis) {
+  const leg = document.querySelector(selector).object3D;
+
+  const mid = foot.clone().add(pelvis).multiplyScalar(0.5);
+  const length = foot.distanceTo(pelvis);
+
+  leg.position.copy(mid);
+  leg.scale.set(1, length, 1);
+
+  leg.lookAt(pelvis);
+  leg.rotateX(Math.PI / 2);
+}
+</script>
+
+</body>
+</html>
+
+<!--         
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,7 +189,7 @@
 
 <a-entity id="pas epic" position="-2.99582 0 0">
 <!--<a-entity id="copter" position="0 0 0" animation="dur: 1000; dir: alternate; easing: linear; loop: true; property: position; to: 0 10 0">
-<a-entity id="boris" position="-0.357 0.782 -0.267" rotation="0 0 0" animation="dur: 500; easing: linear; loop: true; property: rotation; to: 0 360 0">-->
+<a-entity id="boris" position="-0.357 0.782 -0.267" rotation="0 0 0" animation="dur: 500; easing: linear; loop: true; property: rotation; to: 0 360 0">
  <a-gltf-model id="jambe droite" src="./piedd.glb" position="-1.36221 1.03042 0.01073" rotation="22.08 0 -86.10982703021142" gltf-model="./piedd.glb">
   </a-gltf-model>
 <a-gltf-model id="jambe gauche" src="./piedg.glb" position="0.7242 1.65956 0.29105" rotation="22.08 0 88.01147395225063" gltf-model="./piedg.glb">
@@ -84,4 +261,4 @@
 </script>
 
 </body>
-</html>
+</html>-->
