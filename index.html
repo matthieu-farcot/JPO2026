@@ -37,6 +37,97 @@
 <a-gltf-model id="servante1" src="./scene.glb" gltf-model="./scene.glb" position="-1.05594 0 0" rotation="0 90 0" animation="dir: alternate; dur: 2500; easing: linear; loop: true; property: position; to: -1.181 0 0"></a-gltf-model>
  <a-gltf-model id="servante2" src="./scene.glb" gltf-model="./scene.glb" position="1.02503 -0.03257 0" rotation="0 90 0" animation="dir: alternate; dur: 2500; easing: linear; loop: true; property: position; to: 1.181 0 0">&gt;</a-gltf-model>
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Déplacer les cubes + bonhomme</title>
+<style>
+  body {
+    margin: 0;
+    background: #fafafa;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+  .cube {
+    width: 60px;
+    height: 60px;
+    background: tomato;
+    position: absolute;
+    bottom: 20px;
+    cursor: grab;
+  }
+  #cubeLeft { left: 30%; }
+  #cubeRight { left: 60%; }
+  
+  .person {
+    width: 16px;
+    height: 100px;
+    background: royalblue;
+    position: absolute;
+    bottom: 100px;
+    left: 45%;
+    transform: translateX(-50%);
+  }
+  .leg {
+    width: 6px;
+    height: 60px;
+    background: yellow;
+    position: absolute;
+    top: 80px;
+  }
+  .leg.left { left: -10px; }
+  .leg.right { right: -10px; }
+</style>
+</head>
+<body>
+
+<div id="cubeLeft" class="cube"></div>
+<div id="cubeRight" class="cube"></div>
+
+<div class="person" id="person">
+  <div class="leg left"></div>
+  <div class="leg right"></div>
+</div>
+
+<script>
+let currentDrag = null;
+let startOffsetX = 0;
+
+// Récupère les cubes
+const cubeLeft = document.getElementById("cubeLeft");
+const cubeRight = document.getElementById("cubeRight");
+
+[cubeLeft, cubeRight].forEach(cube => {
+  cube.addEventListener("mousedown", function(e) {
+    currentDrag = cube;
+    startOffsetX = e.clientX - cube.offsetLeft;
+    cube.style.cursor = "grabbing";
+  });
+});
+
+// Arrêter de bouger
+document.addEventListener("mouseup", () => {
+  if(currentDrag) {
+    currentDrag.style.cursor = "grab";
+  }
+  currentDrag = null;
+});
+
+// Bouger avec la souris
+document.addEventListener("mousemove", function(e) {
+  if(currentDrag) {
+    currentDrag.style.left = (e.clientX - startOffsetX) + "px";
+    updatePerson();
+  }
+});
+
+function updatePerson() {
+  const leftX = cubeLeft.offsetLeft;
+  const rightX = cubeRight.offsetLeft;
+  const person = document
+
 
 </body>
 </html>
